@@ -8,6 +8,6 @@ TODO: See if its possible to safely integrate Nebula's backend into the plugin (
 this isn't really a high-priority but it's something to keep in mind.
 -->
 
-once you've done all that, drop `index.ts` from this folder into `vencord/src/plugins/Nebula` (create the folder if it doesnt exist), recompile, reload discord, and you should be done.
+once you've done all that, follow [this guide](https://docs.vencord.dev/installing/custom-plugins/) on how to install it.
 
 as of writing this (Nebula v1.0), the plugin alone will not be enough to get Nebula functional. you're gonna need what is in the server-side folder of this repository. head over there and read the instructions!
