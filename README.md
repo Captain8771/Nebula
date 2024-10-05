@@ -1,5 +1,5 @@
 # Nebula
-Nebula is a proof-of-concept for automated forwarding of messages. with this, one can do stuff like bypass the need for nitro when uploading files, or increase your filesize limit back up to 25mb (when i get around to it). you can aso send embeds.
+Nebula is a proof-of-concept for automated forwarding of messages. with this, one can do stuff like bypass the need for nitro when uploading files, or increase your filesize limit back up to 25mb (when i get around to it). you can also send embeds.
 
 ## how it works
 Nebula consists of two sides: the server side, and client side, talking to each other over HTTP. i have detailed the exact steps below, in order of when it happens:
