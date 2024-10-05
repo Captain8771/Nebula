@@ -27,6 +27,7 @@ import { Webpack } from "Vencord";
 import { Forms } from "webpack/common/components";
 
 const forwardModule = Webpack.findByPropsLazy("sendForward");
+// thanks nookies
 const forceLoadForward = Webpack.extractAndLoadChunksLazy(['"forward-modal"', "initialSelectedDestinations:"]);
 
 export default definePlugin({
@@ -41,6 +42,7 @@ export default definePlugin({
             default: "http://127.0.0.1:8772",
             placeholder: "http://127.0.0.1:8772",
             isValid(setting: string) {
+                // probably not the best way to do this? but i cant think of any better ones.
                 return new RegExp("^https?:\/\/(?:\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\.\\d{1,3}|localhost|[a-z.]+)(?::\\d+)?\/?$").test(setting);
             }
         }
@@ -55,7 +57,8 @@ export default definePlugin({
             }
         },
         {
-            find: ".PREMIUM_LOCKED;", // also stolen from fakenitro.
+            // also stolen from fakenitro.
+            find: ".PREMIUM_LOCKED;",
             replacement: {
                 match: /(?<=\|\|)\i\.\i\.canUseAnimatedEmojis\(\i\)/,
                 replace: "($&||true)"
@@ -84,23 +87,23 @@ export default definePlugin({
         let emojis: string[] = [];
         for (const emoji of msg.validNonShortcutEmojis) {
             if (canUseAllEmojis) {
-                // @ts-ignore: typescript yells at you for this but you can ignore it, and i'm pretty sure some official plugins do this too
+                // @ts-ignore: "typescript yells at you for this but you can ignore it, and i'm pretty sure some official plugins do this too"
                 canUseAllEmojis = window.Vencord.Plugins.plugins.FakeNitro.canUseEmote(emoji, cId);
             }
             /*
             {
-                    "roles": [],
-                "require_colons": true,
-                "name": "lore2",
-                "managed": false,
-                "id": "1288448097277448223",
-                "available": true,
-                "animated": false,
-                "allNamesString": ":lore2:",
-                "guildId": "1158002349713936394",
-                "type": 1
+                "roles": [], // list of roles its locked to
+                "require_colons": true, // ???
+                "name": "name", // self-explanatory
+                "managed": false, // ???
+                "id": "0000000000000000000", // self-explanatory
+                "available": true, // ...usable? idk
+                "animated": false, // self-explanatory
+                "allNamesString": ":name:", // ...just the name surrounded by colons?
+                "guildId": "0000000000000000000", // guild id
+                "type": 1 // ??? idk what other types there are
             }
-                */
+            */
             let emojiUrl = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'webp'}?size=1024`;
             emojis.push(`<${emoji.animated ? 'a' : ''}:${emoji.name.split("~")[0]}:${emoji.id}>,${emojiUrl}`);
         }
@@ -120,7 +123,7 @@ export default definePlugin({
             msg.content = '';
             forwardModule.sendForward(await res.json(), cId, { withMessage: '' });
         } else {
-            // assume its either a raw message component, or a normal message.
+            // at this point, assume its either a raw message component, or a normal message.
             if (!msg.content.startsWith("JSON::")) {
                 return;
             }
@@ -134,7 +137,7 @@ export default definePlugin({
                 }
             });
 
-            if (!res.ok) return;
+            if (!res.ok) return { cancel: true };
             msg.content = '';
             forwardModule.sendForward(await res.json(), cId, { withMessage: '' });
         }

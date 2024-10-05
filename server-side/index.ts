@@ -26,14 +26,18 @@ async function sendMSG(msg: any) {
     }
 }
 
-app.post("/msg-raw", async (req: Request, res: Response) => {
-    let messageContent: string = decodeURIComponent(req.headers.message?.toString()!);
-    let m = await sendMSG(JSON.parse(messageContent));
-    res.status(200);
-    res.send({
-        channel_id: CHANNEL_ID,
-        id: m.id,
-    });
+app.post("/msg-raw", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        let messageContent: string = decodeURIComponent(req.headers.message?.toString()!);
+        let m = await sendMSG(JSON.parse(messageContent));
+        res.status(200);
+        res.send({
+            channel_id: CHANNEL_ID,
+            id: m.id,
+        });
+    } catch (e: any) {
+        next(e);
+    }
 });
 
 app.post("/msg-emoji", async (req: Request, res: Response, next: NextFunction) => {
