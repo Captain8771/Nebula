@@ -11,7 +11,8 @@ welcome to the backend of Nebula, a network of spaghetti code that handles the b
 ### ok how do i actually do the funny
 1. open your terminal of choice and navigate to the server-side directory.
 2. pnpm i 
-3. tsc
-4. use your operating system's way to set the environment variable BOT_TOKEN to the token of the bot
-5. node index.js
-6. profit
+3. edit the first few lines of index.ts (namely, the guild and channel id one)
+4. tsc
+5. use your operating system's way to set the environment variable BOT_TOKEN to the token of the bot
+6. node index.js
+7. profit
